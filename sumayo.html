@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tailor Graphic — Modern Responsive Site</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================
+       Reset & Base
+       ========================= */
+    :root{
+      --bg: #FAFBFC;
+      --card: #FFFFFF;
+      --text: #0f1720;
+      --muted: #6b7280;
+      --accent: #ff7a18; /* accent color (orange) */
+      --glass: rgba(255,255,255,0.7);
+      --max-width: 1100px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Poppins",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      color:var(--text);
+      background: linear-gradient(180deg, #f8fafc 0%, #f6f7f9 100%);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* =========================
+       Header / Navbar
+       ========================= */
+    header{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:1000;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.65));
+      border-bottom: 1px solid rgba(15,23,32,0.05);
+    }
+    .nav-container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+      padding:0.8rem 1.25rem;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:.6rem;
+      font-weight:700;
+      font-size:1.05rem;
+      letter-spacing:.4px;
+    }
+    .brand .logo{
+      width:38px;height:38px;border-radius:8px;
+      display:inline-grid;place-items:center;background:linear-gradient(135deg,var(--accent),#ffb47a);
+      color:white;font-weight:700;font-size:0.95rem;
+    }
+
+    nav.nav{
+      display:flex;
+      gap:1rem;
+      align-items:center;
+    }
+    nav.nav a{
+      padding:0.55rem 0.6rem;
+      position:relative;
+      font-weight:500;
+      color:var(--text);
+      border-radius:6px;
+    }
+    nav.nav a:hover{ color:var(--accent) }
+    .cta{
+      background:var(--accent);
+      color:white;
+      padding:0.5rem 0.9rem;
+      border-radius:8px;
+      font-weight:600;
+      box-shadow: 0 6px 20px rgba(255,122,24,0.12);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .cta:hover{ transform:translateY(-3px) }
+
+    /* Mobile menu */
+    .hamburger{
+      display:none;
+      width:42px;height:42px;border-radius:8px;
+      align-items:center;justify-content:center;
+      background:transparent;border:0;
+    }
+
+    /* =========================
+       Hero
+       ========================= */
+    .hero{
+      min-height:92vh;
+      display:grid;
+      place-items:center;
+      padding:110px 1.25rem 3rem; /* account for fixed header */
+    }
+    .hero-inner{
+      max-width:var(--max-width);
+      width:100%;
+      display:flex;
+      gap:2.5rem;
+      align-items:center;
+      justify-content:space-between;
+      padding:2.4rem;
+      border-radius:14px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.65));
+      box-shadow: 0 10px 40px rgba(15,23,32,0.06);
+      overflow:hidden;
+    }
+    .hero-left{flex:1;min-width:260px}
+    .eyebrow{
+      display:inline-block;
+      background:rgba(255,122,24,0.12);
+      color:var(--accent);
+      padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.85rem;margin-bottom:14px;
+    }
+    h1.hero-title{
+      font-size:2.1rem;
+      margin:0 0 .6rem 0;
+      line-height:1.06;
+    }
+    p.lead{color:var(--muted); margin:0 0 1.2rem 0; font-size:1rem}
+    .hero-actions{display:flex;gap:12px;align-items:center}
+    .secondary{
+      background:transparent;border:1px solid rgba(15,23,32,0.06);padding:0.45rem 0.9rem;border-radius:8px;font-weight:600;
+    }
+
+    /* hero image / visual */
+    .hero-right{
+      flex:0 0 420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .visual-card{
+      width:100%;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow: 0 12px 40px rgba(2,6,23,0.08);
+      background: linear-gradient(180deg,#fff,#fff);
+      padding:18px;
+      display:grid;
+      gap:12px;
+    }
+    .visual-thumb{
+      width:100%;
+      height:220px;
+      border-radius:8px;
+      background-image: linear-gradient(135deg, rgba(255,122,24,0.15), rgba(0,0,0,0.03));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;color:var(--accent);
+      font-size:1.2rem;
+    }
+
+    /* =========================
+       Sections (container + utility)
+       ========================= */
+    .section{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:70px 1.25rem;
+    }
+    h2.section-title{ font-size:1.6rem; margin:0 0 0.8rem 0 }
+    p.section-desc{ color:var(--muted); margin:0 0 1.6rem 0; max-width:760px }
+
+    /* =========================
+       Services
+       ========================= */
+    .services-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:1.1rem;
+    }
+    .service-card{
+      background:var(--card);
+      border-radius:12px;
+      padding:18px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.04);
+      transition:transform .32s cubic-bezier(.2,.9,.2,1), box-shadow .32s;
+      transform-origin:center;
+    }
+    .service-card:hover{
+      transform:translateY(-10px);
+      box-shadow: 0 18px 50px rgba(2,6,23,0.08);
+    }
+    .svc-icon{
+      width:56px;height:56px;border-radius:10px;display:grid;place-items:center;
+      background: linear-gradient(135deg,var(--accent),#ffb47a);
+      color:white;font-weight:700;margin-bottom:12px;
+    }
+    .svc-title{ font-weight:600; margin-bottom:6px }
+    .svc-desc{ color:var(--muted); font-size:0.95rem }
+
+    /* =========================
+       About (two-col)
+       ========================= */
+    .about-grid{
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:2rem;
+      align-items:center;
+    }
+    .about-card{
+      background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.8));
+      padding:18px;border-radius:12px;box-shadow:0 10px 36px rgba(2,6,23,0.05)
+    }
+    .about-media{
+      border-radius:12px;overflow:hidden;height:100%;
+      background:linear-gradient(135deg,#fff8f3,#fff);
+      display:flex;align-items:center;justify-content:center;padding:22px;
+    }
+
+    /* =========================
+       Contact
+       ========================= */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:1.25rem;
+      align-items:start;
+    }
+    .contact-form{
+      background:var(--card);padding:18px;border-radius:12px;box-shadow:0 8px 32px rgba(2,6,23,0.04)
+    }
+    .field{display:flex;flex-direction:column;margin-bottom:12px}
+    .field label{font-weight:600;margin-bottom:6px;font-size:.95rem}
+    .field input,.field textarea{
+      padding:10px 12px;border-radius:8px;border:1px solid rgba(15,23,32,0.06);font-size:0.95rem;
+      resize:vertical;
+    }
+    .field textarea{min-height:110px}
+    .submit{
+      display:inline-block;padding:10px 14px;border-radius:10px;background:var(--accent);color:white;font-weight:700;border:0;
+      cursor:pointer;
+      box-shadow: 0 10px 30px rgba(255,122,24,0.12);
+      transition:transform .16s ease;
+    }
+    .submit:active{transform:translateY(1px)}
+
+    .contact-info{
+      background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,255,255,0.9));
+      padding:18px;border-radius:12px;box-shadow:0 8px 32px rgba(2,6,23,0.04);
+      color:var(--muted)
+    }
+    .info-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-weight:600}
+    .info-row small{display:block;font-weight:400;color:var(--muted)}
+
+    /* =========================
+       Footer
+       ========================= */
+    footer{padding:22px 1.25rem;background:transparent;color:var(--muted);border-top:1px solid rgba(15,23,32,0.03)}
+    .footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+
+    /* =========================
+       Animations (initial state)
+       ========================= */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease, transform .7s ease}
+    .reveal.revealed{opacity:1;transform:none}
+
+    /* =========================
+       Responsiveness
+       ========================= */
+    @media (max-width:1000px){
+      .about-grid{grid-template-columns:1fr}
+      .contact-grid{grid-template-columns:1fr}
+      .hero-right{display:none}
+      .services-grid{grid-template-columns:repeat(2,1fr)}
+      .nav .cta{display:none}
+    }
+    @media (max-width:720px){
+      header .nav-container{padding:0.6rem 0.9rem}
+      .hero-inner{padding:18px;flex-direction:column;gap:16px}
+      .service-card{padding:14px}
+      .services-grid{grid-template-columns:1fr}
+      .hamburger{display:flex}
+      nav.nav{display:none}
+      .visual-thumb{height:160px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER / NAV ===== -->
+  <header>
+    <div class="nav-container">
+      <div class="brand">
+        <div class="logo">TG</div>
+        <div>
+          Tailor Graphic
+          <div style="font-size:0.78rem;color:var(--muted);font-weight:500">Tailoring · Design · Embroidery</div>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main Navigation">
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="cta" href="#contact">Get Quote</a>
+      </nav>
+
+      <button class="hamburger" aria-label="Open menu" id="hamburgerBtn">
+        <!-- simple hamburger icon -->
+        <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="18" height="2" rx="1" fill="#0f1720" />
+          <rect y="6" width="18" height="2" rx="1" fill="#0f1720" />
+          <rect y="12" width="18" height="2" rx="1" fill="#0f1720" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== MOBILE NAV (drawer) ===== -->
+  <div id="mobileNav" style="display:none;position:fixed;inset:64px 12px auto 12px;z-index:1200;">
+    <div style="background:rgba(255,255,255,0.98);border-radius:12px;padding:14px;box-shadow:0 12px 40px rgba(2,6,23,0.12);">
+      <a href="#home" style="display:block;padding:10px 6px;border-radius:8px">Home</a>
+      <a href="#services" style="display:block;padding:10px 6px;border-radius:8px">Services</a>
+      <a href="#about" style="display:block;padding:10px 6px;border-radius:8px">About</a>
+      <a href="#contact" style="display:block;padding:10px 6px;border-radius:8px">Contact</a>
+      <div style="padding-top:6px"><a class="cta" href="#contact" style="display:inline-block">Get Quote</a></div>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <main id="home" class="hero">
+    <div class="hero-inner reveal">
+      <div class="hero-left">
+        <span class="eyebrow">Custom · Confident · Creative</span>
+        <h1 class="hero-title">Beautiful tailoring meets modern graphic design</h1>
+        <p class="lead">We craft custom clothing and brand visuals that fit — literally and visually. From suits and uniforms to logos and posters, we cover the full creative process.</p>
+
+        <div class="hero-actions">
+          <a class="cta" href="#contact">Get a Free Quote</a>
+          <a class="secondary" href="#services">Our Services</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="visual-card" aria-hidden="true">
+          <div class="visual-thumb">Design + Tailoring Preview</div>
+          <div style="display:flex;gap:8px;align-items:center;justify-content:space-between;">
+            <div style="font-weight:600">Featured Work</div>
+            <div style="font-size:0.9rem;color:var(--muted)">Mogadishu, Somalia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" class="section">
+    <h2 class="section-title reveal">Services</h2>
+    <p class="section-desc reveal">We provide an integrated set of tailoring and graphic design services — pick one or combine them for a full brand refresh.</p>
+
+    <div class="services-grid">
+      <article class="service-card reveal" aria-labelledby="svc1">
+        <div class="svc-icon">T</div>
+        <h3 id="svc1" class="svc-title">Custom Tailoring</h3>
+        <p class="svc-desc">Bespoke suits, dresses, and uniforms — measured and crafted to fit your silhouette and style.</p>
+      </article>
+
+      <article class="service-card reveal" aria-labelledby="svc2">
+        <div class="svc-icon">G</div>
+        <h3 id="svc2" class="svc-title">Graphic Design</h3>
+        <p class="svc-desc">Logos, branding, posters and digital artwork that communicate your identity with clarity.</p>
+      </article>
+
+      <article class="service-card reveal" aria-labelledby="svc3">
+        <div class="svc-icon">E</div>
+        <h3 id="svc3" class="svc-title">Embroidery & Printing</h3>
+        <p class="svc-desc">High-quality embroidery and print services for uniforms, gifts, and promotional apparel.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="section" style="padding-top:36px;">
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <h2 class="section-title">About Tailor Graphic</h2>
+        <p class="section-desc">Tailor Graphic is a creative studio blending traditional tailoring craft with modern graphic sensibilities. We collaborate with individuals and small businesses to design garments and brand visuals that tell a coherent story.</p>
+        <ul style="color:var(--muted);margin-top:10px;line-height:1.6">
+          <li>Personalized fittings and pattern-making</li>
+          <li>Brand identity and print collateral</li>
+          <li>Small-batch production and quality control</li>
+        </ul>
+      </div>
+
+      <div class="about-media reveal" aria-hidden="true">
+        <!-- Decorative illustration area (replace with actual image if available) -->
+        <div style="text-align:center">
+          <div style="font-weight:700;color:var(--accent);font-size:1.05rem">Craft · Concept · Care</div>
+          <div style="margin-top:10px;color:var(--muted)">An integrated approach that values fit and function as much as aesthetics.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="section">
+    <h2 class="section-title reveal">Contact Us</h2>
+    <p class="section-desc reveal">Send us a message and we'll reply within 1–2 business days. (This demo form doesn't send emails — integrate with your backend or a service like Formspree to receive submissions.)</p>
+
+    <div class="contact-grid">
+      <form class="contact-form reveal" id="contactForm" onsubmit="handleSubmit(event)" novalidate>
+        <div class="field">
+          <label for="name">Full name</label>
+          <input id="name" name="name" required placeholder="Your name">
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell us about your project..."></textarea>
+        </div>
+
+        <button type="submit" class="submit">Send Message</button>
+        <div id="formMsg" style="margin-top:10px;color:var(--muted);font-size:0.95rem"></div>
+      </form>
+
+      <aside class="contact-info reveal" aria-label="Contact information">
+        <div style="font-weight:700;margin-bottom:6px">Get in touch</div>
+        <div class="info-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 16.5V19a2 2 0 0 1-2 2A19 19 0 0 1 3 6a2 2 0 0 1 2-2h2.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div>+252 61 234 5678</div><small>Call or WhatsApp</small></div></div>
+
+        <div class="info-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/></svg><div><div>info@tailorgraphic.com</div><small>We reply within 1–2 business days</small></div></div>
+
+        <div class="info-row"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2c4.97 0 9 4.03 9 9 0 6.43-7.5 11-9 11S3 17.43 3 11c0-4.97 4.03-9 9-9z" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg><div><div>Mogadishu, Somalia</div><small>Visit by appointment</small></div></div>
+
+        <div style="margin-top:14px;color:var(--muted)">Follow us on social media for new designs and offers.</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; <span id="year"></span> Tailor Graphic</div>
+      <div style="color:var(--muted)">Made with care — Tailoring & Design</div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Set dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    let mobileOpen = false;
+    hamburgerBtn?.addEventListener('click', () => {
+      mobileOpen = !mobileOpen;
+      mobileNav.style.display = mobileOpen ? 'block' : 'none';
+    });
+
+    // Close mobile nav when clicking a mobile link
+    mobileNav.addEventListener('click', (e) => {
+      if(e.target.tagName === 'A' || e.target.classList.contains('cta')){
+        mobileNav.style.display = 'none';
+        mobileOpen = false;
+      }
+    });
+
+    // Smooth scroll offset correction for fixed header
+    function offsetScrollTo(hash) {
+      const el = document.querySelector(hash);
+      if(!el) return;
+      const headerHeight = document.querySelector('header').offsetHeight;
+      const top = el.getBoundingClientRect().top + window.pageYOffset - headerHeight - 14;
+      window.scrollTo({top, behavior:'smooth'});
+    }
+    // intercept anchor clicks to apply offset
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (ev)=>{
+        const href = a.getAttribute('href');
+        if(href.length > 1){
+          ev.preventDefault();
+          offsetScrollTo(href);
+        }
+      });
+    });
+
+    // Simple reveal-on-scroll using IntersectionObserver
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('revealed');
+          // unobserve to avoid re-trigger
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => obs.observe(r));
+
+    // Simple contact form handler (demo)
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const formMsg = document.getElementById('formMsg');
+
+      if(!name || !email || !message){
+        formMsg.textContent = 'Please fill all fields.';
+        formMsg.style.color = 'crimson';
+        return;
+      }
+
+      // Demo success message (replace with real AJAX/post to server)
+      formMsg.style.color = 'green';
+      formMsg.textContent = 'Thanks! Your message has been received (demo).';
+      e.target.reset();
+    }
+
+    // Accessibility: close mobile nav on ESC
+    document.addEventListener('keydown', (ev) => {
+      if(ev.key === 'Escape' && mobileOpen){
+        mobileNav.style.display = 'none';
+        mobileOpen = false;
+      }
+    });
+
+  </script>
+</body>
+</html>
